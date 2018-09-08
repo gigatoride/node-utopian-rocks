@@ -4,7 +4,8 @@
   "description": "API wrapper for utopian.rocks.",
   "main": "api.js",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "qs": "^6.5.2"
   },
   "devDependencies": {
     "jest": "^23.5.0"
