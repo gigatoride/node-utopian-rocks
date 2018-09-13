@@ -1,6 +1,6 @@
 {
   "name": "node-utopian-rocks",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "An API wrapper for utopian.rocks.",
   "main": "./src/api.js",
   "dependencies": {
