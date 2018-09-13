@@ -1,8 +1,11 @@
 const axios = require('axios'); // Promise based HTTP client.
 const qs = require('qs'); // A querystring parsing and stringifying library.
-const API_URL = "https://utopian.rocks/api"; // The current host for Utopian API.
+const API_URL = require('../config.json').uri; // The current host for Utopian API.
 
-let endpoints = {}; // JS object for API endpoints.
+let endpoints = {
+  stats: require('./lib/stats')
+}; // JS object for API endpoints. 
+
 /**
  * Get all utopian contributions.
  * @param {string} category - Retrieve posts from a specific category.
@@ -10,30 +13,30 @@ let endpoints = {}; // JS object for API endpoints.
  * @param {string} author -	Retrieve posts by a specific author.
  * @param {string} moderator -	Retrieve posts reviewed by a specific moderator.
  * @param {boolean} staff_picked -	Retrieve posts that were or weren't staff picked.
- * @returns {object} All posts by used parameters.
+ * @returns {array} All posts by used parameters.
  */
 endpoints.getPosts = (category, status, author, moderator, staff_picked) => axios.get(API_URL + '/posts', {
-  // Multiple parameters list to filter contributions.
-  params: {
-    category: category, // Any category according to that post (https://steemit.com/utopian-io/@utopian-io/utopian-now-contributions-are-welcome)
-    status: status, // Values unreviewed,reviewed,pending,unvoted
-    author: author, // Author Steem username
-    moderator: moderator, // Moderator Steem username
-    staff_picked: staff_picked // Boolean
-  },
-  paramsSerializer: function (params) {
-    // Stringifying parameters using querystring parsing.
-    return qs.stringify(params, { indices: false }).replace(/([^=&?]+)=(&)/g, ''); // A regular expression to remove empty or null parameters.
-  }
-}).then(function (response) {
-  return response.data; // Returns an object contains all contributions.
-})
+    // Multiple parameters list to filter contributions.
+    params: {
+      category: category, // Any category according to that post (https://steemit.com/utopian-io/@utopian-io/utopian-now-contributions-are-welcome)
+      status: status, // Values unreviewed, reviewed, pending, unvoted
+      author: author, // Author Steem username
+      moderator: moderator, // Moderator Steem username
+      staff_picked: staff_picked // Boolean value
+    },
+    // Convert a params object into a string with qs.stringify(), then regular expression to remove empty or null parameters.
+    paramsSerializer: params => qs.stringify(params, {
+      indices: false
+    }).replace(/([^=&?]+)=(&)/g, '')
+  }).then(function (response) {
+    return response.data; // Returns an array of object contains all contributions.
+  })
   .catch(function (error) {
     return error; // Returns an error of something wrong with response.
   });
 /**
  * Get all Utopian moderators usernames.
- * @returns {object} Total Utopian moderators.
+ * @returns {array} Total Utopian moderators.
  */
 endpoints.getModerators = () => axios.get(API_URL + '/moderators') //requesting moderators endpoint
   .then(function (response) {
@@ -43,34 +46,15 @@ endpoints.getModerators = () => axios.get(API_URL + '/moderators') //requesting 
     return error; // Returns an error of something wrong with response.
   });
 /**
- * Get all Utopian statistics by date or today.
- * @param {string} specificDate
- * @returns {object}
+ * Check username if a moderator.
+ * @returns {boolean} true or false.
  */
-endpoints.getStats = (specificDate, section) => axios.get(API_URL + '/statistics/' + specificDate)
+endpoints.isModerator = (username) => axios.get(API_URL + '/moderators') // Requesting moderators endpoint
   .then(function (response) {
-    switch (section) {
-      case 'moderators':
-        return response.data[0]; // Returns an object.
-        break;
-      case 'categories':
-        return response.data[1]; // Returns an object.
-        break;
-      case 'projects':
-        return response.data[2]; // Returns an object.
-        break;
-      case 'staff_picks':
-        return response.data[3]; // Returns an object.
-        break;
-      case 'task_requests':
-        return response.data[4]; // Returns an object.
-        break;
-      default:
-        return response.data; // Returns an object for all statistics sections.
-    }
+    return response.data.includes(username) // Returns true or false.
   })
-    .catch(function (error) {
-      return error; // Returns an error of something wrong with response.
-    });
+  .catch(function (error) {
+    return error; // Returns an error of something wrong with response.
+  });
 //Exports all endpoints
 module.exports = endpoints;
