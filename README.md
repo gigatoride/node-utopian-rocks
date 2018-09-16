@@ -1,6 +1,6 @@
 # node-utopian-rocks
 
-![https://www.npmjs.com/package/node-utopian-rocks](https://img.shields.io/npm/v/node-utopian-rocks.svg) [![GitHub license](https://img.shields.io/github/license/gigatoride/node-utopian-rocks.svg)](https://github.com/gigatoride/node-utopian-rocks/blob/master/LICENSE) [![install size](https://packagephobia.now.sh/badge?p=node-utopian-rocks@0.0.5)](https://packagephobia.now.sh/result?p=node-utopian-rocks@0.0.5)
+[![npm](https://img.shields.io/npm/v/node-utopian-rocks.svg)](https://www.npmjs.com/package/node-utopian-rocks) [![GitHub license](https://img.shields.io/github/license/gigatoride/node-utopian-rocks.svg)](https://github.com/gigatoride/node-utopian-rocks/blob/master/LICENSE) [![install size](https://packagephobia.now.sh/badge?p=node-utopian-rocks@0.0.5)](https://packagephobia.now.sh/result?p=node-utopian-rocks@0.0.5)
 ![Utopian](https://img.shields.io/badge/powered%20by-utopian.io-ff69b4.svg)
 
 An API wrapper for utopian.rocks.
