@@ -7,7 +7,7 @@ let endpoints = {
 }; // JS object for API endpoints. 
 
 /**
- * Get all utopian contributions.
+ * All utopian contributions posts.
  * @param {string} category - Retrieve posts from a specific category.
  * @param {string} status -	Status to filter contributions.
  * @param {string} author -	Retrieve posts by a specific author.
@@ -16,26 +16,25 @@ let endpoints = {
  * @returns {array} All posts by used parameters.
  */
 endpoints.getPosts = (category, status, author, moderator, staff_picked) => axios.get(API_URL + '/posts', {
-    // Multiple parameters list to filter contributions.
-    params: {
-      category: category, // Any category according to that post (https://steemit.com/utopian-io/@utopian-io/utopian-now-contributions-are-welcome)
-      status: status, // Values unreviewed, reviewed, pending, unvoted
-      author: author, // Author Steem username
-      moderator: moderator, // Moderator Steem username
-      staff_picked: staff_picked // Boolean value
-    },
-    // Convert a params object into a string with qs.stringify(), then regular expression to remove empty or null parameters.
-    paramsSerializer: params => qs.stringify(params, {
-      indices: false
-    }).replace(/([^=&?]+)=(&)/g, '')
-  }).then(function (response) {
-    return response.data; // Returns an array of object contains all contributions.
-  })
-  .catch(function (error) {
-    return error; // Returns an error of something wrong with response.
-  });
+  // Multiple parameters list to filter contributions.
+  params: {
+    category: category, // Any category according to that post (https://steemit.com/utopian-io/@utopian-io/utopian-now-contributions-are-welcome)
+    status: status, // Values unreviewed, reviewed, pending, unvoted
+    author: author, // Author Steem username
+    moderator: moderator, // Moderator Steem username
+    staff_picked: staff_picked // Boolean value
+  },
+  // Convert a params object into a string with qs.stringify()
+  paramsSerializer: params => qs.stringify(params, {
+    indices: false
+  }).replace(/(&?\w+=((?=$)|(?=&)))/g, '') // Regular expression to remove empty or null parameters.
+}).then(function (response) {
+  return response.data; // Returns an array of object contains all contributions.
+}).catch(function (error) {
+  return error; // Returns an error of something wrong with response.
+});
 /**
- * Get all Utopian moderators usernames.
+ * All Utopian moderators usernames.
  * @returns {array} Total Utopian moderators.
  */
 endpoints.getModerators = () => axios.get(API_URL + '/moderators') //requesting moderators endpoint
