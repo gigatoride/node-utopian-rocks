@@ -2,11 +2,9 @@ const utopian = require("../src/api");
 
 jest.setTimeout(30000);
 
-//Retrieve projects statistics
+// Retrieve projects statistics
 test("returns true for username favcau as a moderator", async () => {
-  expect(await utopian.isModerator('favcau')).toBe(
-    true
-  );
+  expect(await utopian.isModerator("favcau")).toBe(true);
 });
 
 test("returns an array for projects statistics by status and category", async () => {
@@ -15,7 +13,7 @@ test("returns an array for projects statistics by status and category", async ()
   );
 });
 
-//Retrieve contributors statistics
+// Retrieve contributors statistics
 test("returns an array of objects for contributors statistics by status and category", async () => {
   expect(
     Array.isArray(

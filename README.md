@@ -1,6 +1,6 @@
 # node-utopian-rocks
 
-[![npm](https://img.shields.io/npm/v/node-utopian-rocks.svg)](https://www.npmjs.com/package/node-utopian-rocks) [![GitHub license](https://img.shields.io/github/license/gigatoride/node-utopian-rocks.svg)](https://github.com/gigatoride/node-utopian-rocks/blob/master/LICENSE) [![install size](https://packagephobia.now.sh/badge?p=node-utopian-rocks@0.0.5)](https://packagephobia.now.sh/result?p=node-utopian-rocks@0.0.5)
+[![Build Status](https://travis-ci.org/gigatoride/node-utopian-rocks.svg?branch=master)](https://travis-ci.org/gigatoride/node-utopian-rocks) [![npm](https://img.shields.io/npm/v/node-utopian-rocks.svg)](https://www.npmjs.com/package/node-utopian-rocks) [![GitHub license](https://img.shields.io/github/license/gigatoride/node-utopian-rocks.svg)](https://github.com/gigatoride/node-utopian-rocks/blob/master/LICENSE) [![install size](https://packagephobia.now.sh/badge?p=node-utopian-rocks@0.0.5)](https://packagephobia.now.sh/result?p=node-utopian-rocks@0.0.5)
 ![Utopian](https://img.shields.io/badge/powered%20by-utopian.io-ff69b4.svg)
 
 An API wrapper for utopian.rocks.
@@ -13,80 +13,81 @@ npm install node-utopian-rocks
 
 ## Usage
 
-First add it to your project
+Add it to your project:
 
 ```js
-const utopian = require('node-utopian-rocks');
+const utopian = require("node-utopian-rocks");
 ```
 
-For example retrieving posts by category and status ``Asynchronously``:
+For example retrieving posts by category and status `async` `await`:
 
 ```js
-await utopian.getPosts('social', 'reviewed')
-
+(async () => {
+  const posts = await utopian.getPosts("social", "reviewed");
+  console.log(posts);
+})();
 ```
 
-or by using ``.then()`` method:
+Using `.then()` method:
 
 ```js
-utopian.getPosts('development', 'reviewed').then(posts => posts);
-```
-
-Or Let's run some tests:
-
-```cmd
-npm test
+utopian
+  .getPosts("development", "reviewed")
+  .then(console.log)
+  .error(console.log);
 ```
 
 ## API
 
 ### Request method aliases
 
-``utopian.getPosts(params)``
+`utopian.getPosts(params)`
 
-``utopian.getModerators()``
+`utopian.getModerators()`
 
-``utopian.isModerator(param)``
+`utopian.isModerator(param)`
 
-``utopian.stats.getModerators(params)``
+`utopian.stats.getModerators(params)`
 
-``utopian.stats.getProjects(params)``
+`utopian.stats.getProjects(params)`
 
-``utopian.stats.getContributors(params)``
+`utopian.stats.getContributors(params)`
 
-``utopian.stats.getModeratorsByDate(param)``
+`utopian.stats.getModeratorsByDate(param)`
 
-``utopian.stats.getProjectsByDate(param)``
+`utopian.stats.getProjectsByDate(param)`
 
-``utopian.stats.getStaffPicksByDate(param)``
+`utopian.stats.getStaffPicksByDate(param)`
 
-``utopian.stats.getCategoriesByDate(param)``
+`utopian.stats.getCategoriesByDate(param)`
 
-``utopian.stats.getTasksRequestsByDate(param)``
+`utopian.stats.getTasksRequestsByDate(param)`
 
 ### Request parameters
 
 These are the available parameters for making requests.
 
-We will start with posts ``Array of Objects``:
+We will start with posts `Array of Objects`:
+We will start with posts:
 
 ```js
-utopian.getPosts(category, status, author, moderator, staff_picks)
+utopian.getPosts(category, status, author, moderator, staff_picks);
 ```
 
 Any parameter can be ignored by empty string or just null
 
 ```js
-utopian.getPosts(category, null, author, null, staff_picks)
+utopian.getPosts(category, null, author, null, staff_picks);
 ```
 
-For moderators ``array`` it should be called without any parameters.
+For moderators `array` it should be called without any parameters.
+For moderators `array`:
 
 ```js
 utopian.getModerators();
 ```
 
-For Statistics
+For Statistics:
 
 ```js
 /**
@@ -106,21 +107,22 @@ utopian.stats.getProjectsByDate(specificDate);
 
 ## Supported Tags
 
-the following table is the correct values  for category ``parameter``
+the following table is the correct values for category `parameter`
 
-Tag | Task tag
---|--
-development | task-development
-copywriting | task-copywriting
-graphics | task-graphics
-analysis | task-analysis
-social | task-social
-documentation | task-documentation
-blog |
-bug-hunting |
-ideas |
-video-tutorials |
-tutorials |
+| Tag             | Task tag           |
+| --------------- | ------------------ |
+| development     | task-development   |
+| copywriting     | task-copywriting   |
+| graphics        | task-graphics      |
+| analysis        | task-analysis      |
+| social          | task-social        |
+| documentation   | task-documentation |
+| blog            |
+| bug-hunting     |
+| ideas           |
+| video-tutorials |
+| tutorials       |
+| anti-abuse      |
 
 ## Roadmap
 
